@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Binary File Viewer</title>
+  <meta name="description" content="A fast hex viewer for any file, right in your browser. Classic offset / hex / ASCII layout with paging and a data inspector (int, float, string at cursor). Vanilla JS, no upload, no build." />
+  <meta name="author" content="Ritesh Udupa" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="title-block">
+      <h1><a class="title-link" href="index.html">Binary File Viewer</a></h1>
+      <p class="subtitle">A fast hex / ASCII viewer for any file — with a data inspector — fully client-side</p>
+      <p class="byline">by <a href="https://www.linkedin.com/in/ritesh-udupa-4b694619/" target="_blank" rel="noopener">Ritesh Udupa</a></p>
+    </div>
+    <div class="controls">
+      <button class="btn" id="btnPick">Open file…</button>
+      <input type="file" id="fileInput" class="hidden" />
+    </div>
+  </header>
+
+  <div class="dropzone" id="dropzone">
+    Drag &amp; drop <strong>any file</strong> here, or <strong>click to browse</strong>.<br />
+    <small>Viewed locally in your browser — nothing is uploaded.</small>
+  </div>
+
+  <main id="output" class="hidden">
+    <div class="toolbar">
+      <span class="fname" id="fname">—</span>
+      <span id="fsize">—</span>
+      <div class="pager">
+        <button class="btn" id="btnPrev">◀ Prev</button>
+        <span id="pageInfo">—</span>
+        <button class="btn" id="btnNext">Next ▶</button>
+      </div>
+      <span>Click a byte to inspect it.</span>
+    </div>
+
+    <div class="hexview" id="hexview"></div>
+
+    <div class="inspector">
+      <h2>Data inspector <span id="cursorOff" style="color:var(--muted);font-size:12px;"></span></h2>
+      <div class="kv" id="inspectorKv"></div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><span>Created by <strong>Ritesh Udupa</strong></span></div>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/ritesh-udupa-4b694619/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/rudupa" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>&copy; <span id="footerYear">2026</span> Ritesh Udupa</span>
+      <span class="footer-dot">&middot;</span>
+      <span>Binary File Viewer</span>
+      <span class="footer-dot">&middot;</span>
+      <span>MIT License</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
+</body>
+</html>

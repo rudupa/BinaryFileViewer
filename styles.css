@@ -1,0 +1,135 @@
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --panel-2: #1c2330;
+  --border: #2b3444;
+  --text: #e6edf3;
+  --muted: #8b98a9;
+  --accent: #58a6ff;
+  --ok: #3fb950;
+  --warn: #d29922;
+  --danger: #f85149;
+  --offset: #8b98a9;
+  --ascii: #3fb950;
+  --nonascii: #6b7688;
+  --sel: #f0b429;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 22px;
+  background: linear-gradient(90deg, #121a2b, #161b22);
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.title-block { min-width: 0; }
+.title-block h1 { margin: 0; font-size: 18px; letter-spacing: .3px; }
+.title-link { color: var(--text); text-decoration: none; border-bottom: 1px dashed transparent; transition: .15s; }
+.title-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.subtitle { margin: 2px 0 0; color: var(--muted); font-size: 11.5px; }
+.byline { margin: 2px 0 0; font-size: 11px; color: var(--muted); }
+.byline a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed transparent; transition: border-color .15s; }
+.byline a:hover { border-bottom-color: var(--accent); }
+
+.controls { display: flex; gap: 8px; align-items: center; }
+
+.btn {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: .15s;
+}
+.btn:hover:not(:disabled) { border-color: var(--accent); background: #222c3d; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.hidden { display: none; }
+
+/* ---------- Drop zone ---------- */
+.dropzone {
+  margin: 16px 22px;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted);
+  transition: .15s;
+  cursor: pointer;
+}
+.dropzone.drag { border-color: var(--accent); background: var(--panel-2); color: var(--text); }
+.dropzone strong { color: var(--text); }
+
+/* ---------- Content ---------- */
+main { padding: 0 22px 22px; }
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 14px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.toolbar .fname { color: var(--text); font-weight: 600; }
+.toolbar .pager { display: flex; align-items: center; gap: 8px; }
+
+.hexview {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.hex-row { white-space: pre; }
+.hex-offset { color: var(--offset); }
+.hex-bytes { color: var(--text); }
+.hex-ascii { color: var(--ascii); }
+.hex-nonascii { color: var(--nonascii); }
+.hex-sep { color: var(--border); }
+
+/* Inspector */
+.inspector {
+  margin-top: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.inspector h2 { margin: 0 0 10px; font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.kv { display: grid; grid-template-columns: 180px 1fr; gap: 6px 16px; font-size: 13px; }
+.kv .k { color: var(--muted); }
+.kv .v { font-family: "Cascadia Code", Consolas, monospace; }
+
+/* ---------- Footer ---------- */
+.app-footer {
+  border-top: 1px solid var(--border);
+  padding: 16px 22px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.footer-links { display: flex; gap: 14px; }
+.footer-links a { color: var(--accent); text-decoration: none; }
+.footer-links a:hover { text-decoration: underline; }
+.footer-meta { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+.footer-dot { color: var(--border); }
