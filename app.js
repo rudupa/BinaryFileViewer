@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Binary File Viewer & Editor
+ * Hex Lens & Editor
  *
  * Fully client-side hex tool: offset / hex / ASCII with smooth virtualized
  * scrolling over the whole file (no paging), a data inspector, in-browser byte
