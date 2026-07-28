@@ -21,6 +21,9 @@
       <label class="chk" title="Show files A and B side by side and highlight differing bytes">
         <input type="checkbox" id="cmpToggle" disabled /> Compare A/B
       </label>
+      <label class="chk" title="Keep both panes scrolled to the same offset; uncheck to scroll each file independently">
+        <input type="checkbox" id="syncToggle" checked disabled /> Sync scroll
+      </label>
       <button class="btn" id="btnSave" disabled title="Download the active file with your byte edits applied">Save ⬇</button>
     </div>
   </header>
@@ -43,19 +46,28 @@
         <span id="diffCount" class="badge"></span>
         <button class="btn btn-mini" id="btnNextDiff">diff ▶</button>
       </span>
-      <span class="hint">Click a byte to inspect · edit it in the inspector below</span>
+      <span class="hint">Click a byte to inspect · double-click to edit it in place</span>
     </div>
 
     <div class="block-panel" id="blockPanel">
       <div class="block-head">
         <h2>Block map</h2>
-        <label class="gap" title="A run of 0x00 or 0xFF at least this long is treated as a gap that separates data blocks">
-          Gap threshold <input id="gapInput" type="number" min="1" value="64" /> B
+        <label class="gap" title="Which byte value counts as unused padding that separates data blocks. None = raw files stay a single block; record files still split on addresses with no data.">
+          Gap fill
+          <select id="gapFill">
+            <option value="none">None</option>
+            <option value="ff">0xFF</option>
+            <option value="00">0x00</option>
+            <option value="custom">Custom…</option>
+          </select>
+          <input id="gapCustom" class="hidden" type="text" maxlength="2" placeholder="hex" />
         </label>
-        <span id="blockVerdict" class="verdict"></span>
+        <label class="gap" title="A run of the gap-fill byte at least this long is treated as a gap that separates data blocks">
+          min run <input id="gapInput" type="number" min="1" value="64" /> B
+        </label>
+        <span class="cmp-legend hidden" id="cmpLegend"><span class="legend-diff"></span> differing bytes</span>
       </div>
-      <div class="block-bar" id="blockBar"></div>
-      <div class="block-list" id="blockList"></div>
+      <div id="blockMaps"></div>
     </div>
 
     <div class="viewwrap" id="viewwrap">
@@ -66,14 +78,7 @@
     <div class="inspector">
       <h2>Data inspector <span id="cursorOff" class="cur-off"></span></h2>
       <div class="kv" id="inspectorKv"></div>
-      <div class="edit-row hidden" id="editRow">
-        <label>Set byte @ <span id="editOff" class="mono"></span> =
-          <input id="editHex" maxlength="2" placeholder="hex" class="mono" />
-        </label>
-        <button class="btn btn-mini" id="btnApplyEdit">Apply</button>
-        <button class="btn btn-mini" id="btnRevertByte">Revert byte</button>
-        <span class="edit-hint">enter two hex digits (00–FF)</span>
-      </div>
+      <p class="edit-hint">Click a byte to inspect · click-drag or shift-click to select a range · then use the <b>✎ edit</b> / <b>✂ cut</b> icons by the selection (or press Delete to cut).</p>
     </div>
   </main>
 
