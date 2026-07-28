@@ -267,7 +267,6 @@ main { padding: 0 22px 22px; }
 .sel-toolbar {
   position: fixed;
   z-index: 60;
-  display: flex;
   gap: 2px;
   padding: 2px;
   background: var(--panel-2);
