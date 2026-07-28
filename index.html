@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Binary File Viewer</title>
-  <meta name="description" content="A fast hex viewer for any file, right in your browser. Classic offset / hex / ASCII layout with paging and a data inspector (int, float, string at cursor). Vanilla JS, no upload, no build." />
+  <meta name="description" content="A fast hex viewer & editor for any file, right in your browser. Offset / hex / ASCII with full smooth scrolling, a data inspector, byte editing with download, block/contiguity map, and side-by-side compare of two files. Vanilla JS, no upload, no build." />
   <meta name="author" content="Ritesh Udupa" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -12,37 +12,68 @@
   <header class="app-header">
     <div class="title-block">
       <h1><a class="title-link" href="index.html">Binary File Viewer</a></h1>
-      <p class="subtitle">A fast hex / ASCII viewer for any file — with a data inspector — fully client-side</p>
+      <p class="subtitle">Hex / ASCII viewer &amp; editor · compare two files · block map · fully client-side</p>
       <p class="byline">by <a href="https://www.linkedin.com/in/ritesh-udupa-4b694619/" target="_blank" rel="noopener">Ritesh Udupa</a></p>
     </div>
     <div class="controls">
       <button class="btn" id="btnPick">Open file…</button>
-      <input type="file" id="fileInput" class="hidden" />
+      <input type="file" id="fileInput" class="hidden" multiple />
+      <label class="chk" title="Show files A and B side by side and highlight differing bytes">
+        <input type="checkbox" id="cmpToggle" disabled /> Compare A/B
+      </label>
+      <button class="btn" id="btnSave" disabled title="Download the active file with your byte edits applied">Save ⬇</button>
     </div>
   </header>
 
   <div class="dropzone" id="dropzone">
-    Drag &amp; drop <strong>any file</strong> here, or <strong>click to browse</strong>.<br />
-    <small>Viewed locally in your browser — nothing is uploaded.</small>
+    Drag &amp; drop <strong>up to two files</strong> here, or <strong>click to browse</strong>.<br />
+    <small>Viewed &amp; edited locally in your browser — nothing is uploaded.</small>
   </div>
 
   <main id="output" class="hidden">
     <div class="toolbar">
+      <div class="file-tabs" id="fileTabs"></div>
       <span class="fname" id="fname">—</span>
       <span id="fsize">—</span>
-      <div class="pager">
-        <button class="btn" id="btnPrev">◀ Prev</button>
-        <span id="pageInfo">—</span>
-        <button class="btn" id="btnNext">Next ▶</button>
-      </div>
-      <span>Click a byte to inspect it.</span>
+      <span id="editCount" class="badge hidden"></span>
+      <button class="btn btn-mini hidden" id="btnRevertAll" title="Undo all byte edits on the active file">Revert all</button>
+      <label class="goto">Go to <input id="gotoInput" placeholder="0x1A0 / 416" /></label>
+      <span class="diffnav hidden" id="diffNav">
+        <button class="btn btn-mini" id="btnPrevDiff">◀ diff</button>
+        <span id="diffCount" class="badge"></span>
+        <button class="btn btn-mini" id="btnNextDiff">diff ▶</button>
+      </span>
+      <span class="hint">Click a byte to inspect · edit it in the inspector below</span>
     </div>
 
-    <div class="hexview" id="hexview"></div>
+    <div class="block-panel" id="blockPanel">
+      <div class="block-head">
+        <h2>Block map</h2>
+        <label class="gap" title="A run of 0x00 or 0xFF at least this long is treated as a gap that separates data blocks">
+          Gap threshold <input id="gapInput" type="number" min="1" value="64" /> B
+        </label>
+        <span id="blockVerdict" class="verdict"></span>
+      </div>
+      <div class="block-bar" id="blockBar"></div>
+      <div class="block-list" id="blockList"></div>
+    </div>
+
+    <div class="viewwrap" id="viewwrap">
+      <div class="hexpane" id="paneA"><div class="hexspacer"><div class="hexwin"></div></div></div>
+      <div class="hexpane" id="paneB" hidden><div class="hexspacer"><div class="hexwin"></div></div></div>
+    </div>
 
     <div class="inspector">
-      <h2>Data inspector <span id="cursorOff" style="color:var(--muted);font-size:12px;"></span></h2>
+      <h2>Data inspector <span id="cursorOff" class="cur-off"></span></h2>
       <div class="kv" id="inspectorKv"></div>
+      <div class="edit-row hidden" id="editRow">
+        <label>Set byte @ <span id="editOff" class="mono"></span> =
+          <input id="editHex" maxlength="2" placeholder="hex" class="mono" />
+        </label>
+        <button class="btn btn-mini" id="btnApplyEdit">Apply</button>
+        <button class="btn btn-mini" id="btnRevertByte">Revert byte</button>
+        <span class="edit-hint">enter two hex digits (00–FF)</span>
+      </div>
     </div>
   </main>
 

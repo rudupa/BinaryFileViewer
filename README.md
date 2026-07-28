@@ -4,26 +4,35 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-a371f7?style=flat)](LICENSE)
 ![Vanilla JS](https://img.shields.io/badge/Built%20with-Vanilla%20JS-d29922?style=flat)
 
-A fast **hex viewer for any file**, right in your browser. Classic
-offset / hex / ASCII layout with paging, plus a **data inspector** that decodes
-the bytes at the cursor as int/float/string in both endiannesses. Built with
+A fast **hex viewer & editor for any file**, right in your browser. Offset / hex /
+ASCII layout with **smooth full-file scrolling** (no paging), a **data inspector**
+that decodes the bytes at the cursor as int/float/string in both endiannesses,
+**in-browser byte editing with download**, a **block / contiguity map**, and
+**side-by-side compare of two files** with byte-diff highlighting. Built with
 vanilla HTML/CSS/JavaScript — no build step, no dependencies, and **nothing is
-uploaded**: the file is read locally with the `FileReader` API.
+uploaded**: files are read locally with the `FileReader` API.
 
 ## Features
 
 - Offset / hex / ASCII columns, 16 bytes per row.
-- Paged view so large files stay responsive.
+- **Virtualized scrolling** — scroll the entire file smoothly, no pages.
+- **Open up to two files** (A / B) and switch between them with tabs.
+- **Compare A/B** side by side with differing bytes highlighted, plus
+  prev/next-diff navigation and a diff count.
+- **Block map** — detects whether the file's data is contiguous or split into
+  multiple blocks by long runs of `0x00` / `0xFF` fill (configurable gap
+  threshold); click a block to jump to it.
+- **Edit bytes** in the data inspector and **download** the modified file — all
+  client-side; edited bytes are highlighted and revertible.
 - Click any byte to inspect it: uint/int 8/16/32, float32/64, binary, and the
   ASCII string starting at that offset — little- and big-endian.
-- Works with any file type.
+- Go-to-offset (hex or decimal). Works with any file type.
 
 ## Roadmap
 
-- [ ] Hex/ASCII search and go-to-offset.
-- [ ] Virtualized scrolling for very large files.
+- [ ] Hex/ASCII search.
 - [ ] Byte highlighting for known formats (PNG, ELF, ZIP…).
-- [ ] Editing and save-as.
+- [ ] Insert / delete bytes (not just overwrite).
 
 ## Run it
 
@@ -35,9 +44,9 @@ leaves your machine.
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Page structure, drop zone, hex view, inspector |
+| `index.html` | Page structure, drop zone, tabs, block map, hex panes, inspector |
 | `styles.css` | Dark theme |
-| `app.js` | Hex rendering + data inspector |
+| `app.js` | Virtualized hex rendering, block detection, compare, editing, save |
 
 ## Author
 
