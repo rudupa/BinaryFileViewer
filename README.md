@@ -1,6 +1,6 @@
 # Hex Lens
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-online-3fb950?style=flat)](https://rudupa.github.io/HexLens/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-online-3fb950?style=flat)](https://rudupa.github.io/hexlens/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-a371f7?style=flat)](LICENSE)
 ![Vanilla JS](https://img.shields.io/badge/Built%20with-Vanilla%20JS-d29922?style=flat)
 
@@ -36,7 +36,7 @@ uploaded**: files are read locally with the `FileReader` API.
 
 ## Run it
 
-Open the [live demo](https://rudupa.github.io/HexLens/), then drag in a
+Open the [live demo](https://rudupa.github.io/hexlens/), then drag in a
 file. To run locally, just open `index.html` (no server needed). Your file never
 leaves your machine.
 
